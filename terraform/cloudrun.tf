@@ -12,6 +12,7 @@ resource "google_artifact_registry_repository" "api_repo" {
 resource "google_cloud_run_v2_service" "api_ts" {
   name     = "api-ts-app"
   location = var.region
+  deletion_protection = false
 
   template {
     service_account = "api-ts-runner@${var.project_id}.iam.gserviceaccount.com"
