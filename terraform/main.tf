@@ -10,11 +10,6 @@ resource "google_project_service" "apis" {
   disable_on_destroy = false
 }
 
-resource "google_service_account" "cloudrun_sa" {
-  account_id   = "api-ts-runner"
-  display_name = "Service Account para execução do Cloud Run"
-}
-
 resource "google_artifact_registry_repository" "my_repo" {
   location      = var.region
   repository_id = var.repository_id
