@@ -2,6 +2,7 @@ resource "google_sql_database_instance" "postgres" {
   name             = "api-db-instance"
   database_version = "POSTGRES_15"
   region           = var.region
+  depends_on = [google_project_service.apis]
   settings {
     tier = "db-f1-micro" 
   }

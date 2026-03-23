@@ -2,7 +2,11 @@ resource "google_artifact_registry_repository" "api_repo" {
   location      = var.region
   repository_id = "api-repo"
   format        = "DOCKER"
-  depends_on    = [google_project_service.apis]
+  depends_on = [
+    google_project_service.apis,
+    google_sql_database_instance.postgres,
+    google_secret_manager_secret_version.db_password_version
+  ]
 }
 
 resource "google_cloud_run_v2_service" "api_ts" {
