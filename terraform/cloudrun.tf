@@ -17,7 +17,7 @@ resource "google_cloud_run_v2_service" "api_ts" {
     service_account = "api-ts-runner@${var.project_id}.iam.gserviceaccount.com"
 
     containers {
-      image = "${var.region}-docker.pkg.dev/${var.project_id}/api-repo/api-ts-app:latest"
+      image = "us-docker.pkg.dev/cloudrun/container/hello" 
       
       env {
         name  = "DB_PASSWORD_SECRET_ID"
@@ -27,7 +27,9 @@ resource "google_cloud_run_v2_service" "api_ts" {
   }
 
   lifecycle {
-    ignore_changes = [template[0].containers[0].image]
+    ignore_changes = [
+      template[0].containers[0].image,
+    ]
   }
 }
 
