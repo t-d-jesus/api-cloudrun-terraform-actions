@@ -1,29 +1,21 @@
 import express from 'express';
-import { Pool } from 'pg';
+import { query } from './database';
 
 const app = express();
 const port = process.env.PORT || 8080;
 
-const pool = new Pool({
-  host: process.env.DB_HOST,     
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-});
-
-app.get('/health', (req, res) => {
-  res.status(200).send('OK');
-});
-
 app.get('/', async (req, res) => {
   try {
-    const result = await pool.query('SELECT NOW()');
+    const result = await query('SELECT NOW()');
     res.json({ 
-      message: "API conectada ao Cloud SQL!", 
+      message: "API Online e Conectada ao Banco!", 
       db_time: result.rows[0].now 
     });
-  } catch (err) {
-    res.status(500).json({ error: "Erro ao conectar no banco", details: err });
+  } catch (err: any) {
+    res.status(500).json({ 
+      error: "Erro ao conectar no banco", 
+      details: err.message 
+    });
   }
 });
 
